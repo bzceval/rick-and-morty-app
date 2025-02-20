@@ -29,9 +29,9 @@ export default function CharacterList({ initialData }: { initialData: any }) {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row gap-4 sm:gap-6 mb-6 items-start md:items-center">
+     <div className="flex flex-col md:flex-row gap-4 sm:gap-6 mb-6 items-center justify-center py-8">
         <Select onValueChange={setStatus} value={status || 'all'}>
-          <SelectTrigger className="w-full md:w-[180px]">
+          <SelectTrigger className="w-full md:w-[180px] border-foreground focus:ring-foreground">
             <SelectValue placeholder="Select Status" />
           </SelectTrigger>
           <SelectContent>
@@ -43,7 +43,7 @@ export default function CharacterList({ initialData }: { initialData: any }) {
         </Select>
 
         <Select onValueChange={setGender} value={gender || 'all'}>
-          <SelectTrigger className="w-full md:w-[180px]">
+          <SelectTrigger className="w-full md:w-[180px] border-foreground focus:ring-foreground">
             <SelectValue placeholder="Select Gender" />
           </SelectTrigger>
           <SelectContent>
@@ -61,9 +61,9 @@ export default function CharacterList({ initialData }: { initialData: any }) {
             setGender('all')
           }}
           variant="outline"
-          className="w-full md:w-auto"
+          className="w-full md:w-auto border-foreground focus:ring-foreground group hover:bg-foreground hover:text-background hover:border-foreground"
         >
-          Reset Filters
+          <span className="group-hover:text-background">Reset Filters</span>
         </Button>
       </div>
 
