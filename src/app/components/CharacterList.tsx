@@ -14,6 +14,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useCharacters } from '@/lib/api'
 import { useFilters } from '@/store/useFilters'
 import { Character } from '@/types/types'
+import Link from 'next/link'
 
 export default function CharacterList({ initialData }: { initialData: any }) {
   const { status, gender, setStatus, setGender } = useFilters()
@@ -85,21 +86,23 @@ export default function CharacterList({ initialData }: { initialData: any }) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
         {data?.results.map((character: Character) => (
-          <Card key={character.id} className="overflow-hidden">
-            <CardHeader className="p-0">
-              <img
-                src={character.image}
-                alt={character.name}
-                className="w-full h-auto rounded-t-lg"
-              />
-            </CardHeader>
-            <CardContent className="p-4 text-center">
-              <CardTitle className="text-lg">{character.name}</CardTitle>
-              <p className="text-sm text-muted-foreground">
-                {character.status} - {character.gender}
-              </p>
-            </CardContent>
-          </Card>
+          <Link key={character.id} href={`/character/${character.id}`}>
+            <Card className="overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
+              <CardHeader className="p-0">
+                <img
+                  src={character.image}
+                  alt={character.name}
+                  className="w-full h-auto rounded-t-lg"
+                />
+              </CardHeader>
+              <CardContent className="p-4 text-center">
+                <CardTitle className="text-lg">{character.name}</CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  {character.status} - {character.gender}
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
     </>
