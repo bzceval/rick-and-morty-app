@@ -29,7 +29,7 @@ export default function CharacterList({ initialData }: { initialData: any }) {
 
   return (
     <>
-     <div className="flex flex-col md:flex-row gap-4 sm:gap-6 mb-6 items-center justify-center py-8">
+      <div className="flex flex-col md:flex-row gap-4 sm:gap-6 mb-6 items-center justify-center py-8">
         <Select onValueChange={setStatus} value={status || 'all'}>
           <SelectTrigger className="w-full md:w-[180px] border-foreground focus:ring-foreground">
             <SelectValue placeholder="Select Status" />
@@ -87,7 +87,7 @@ export default function CharacterList({ initialData }: { initialData: any }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
         {data?.results.map((character: Character) => (
           <Link key={character.id} href={`/character/${character.id}`}>
-            <Card className="overflow-hidden cursor-pointer hover:shadow-lg transition-shadow">
+            <Card className="h-full flex flex-col overflow-hidden cursor-pointer hover:shadow-lg transition-shadow bg-background">
               <CardHeader className="p-0">
                 <img
                   src={character.image}
@@ -95,7 +95,7 @@ export default function CharacterList({ initialData }: { initialData: any }) {
                   className="w-full h-auto rounded-t-lg"
                 />
               </CardHeader>
-              <CardContent className="p-4 text-center">
+              <CardContent className="flex-1 p-4 text-center flex flex-col justify-between">
                 <CardTitle className="text-lg">{character.name}</CardTitle>
                 <p className="text-sm text-muted-foreground">
                   {character.status} - {character.gender}
