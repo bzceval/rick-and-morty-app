@@ -17,7 +17,10 @@ export default async function CharacterDetail({
 }: {
   params: { CharacterId: string }
 }) {
-  const character = await getCharacter(params.CharacterId)
+  // Await the params to access the CharacterId
+  const { CharacterId } = await params
+
+  const character = await getCharacter(CharacterId)
 
   if (!character) return notFound()
 
