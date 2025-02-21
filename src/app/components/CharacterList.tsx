@@ -16,8 +16,17 @@ import { useFilters } from '@/store/useFilters'
 import { Character } from '@/types/types'
 import Link from 'next/link'
 
-export default function CharacterList({ initialData }: { initialData: any }) {
+interface CharacterApiResponse {
+  results: Character[]
+}
+
+export default function CharacterList({
+  initialData
+}: {
+  initialData: CharacterApiResponse
+}) {
   const { status, gender, setStatus, setGender } = useFilters()
+
   const {
     data = initialData,
     isLoading,
@@ -26,6 +35,7 @@ export default function CharacterList({ initialData }: { initialData: any }) {
     status === 'all' ? '' : status,
     gender === 'all' ? '' : gender
   )
+  const characters = 'results' in data ? data.results : []
 
   return (
     <>
@@ -54,7 +64,6 @@ export default function CharacterList({ initialData }: { initialData: any }) {
             <SelectItem value="unknown">Unknown</SelectItem>
           </SelectContent>
         </Select>
-
         <Button
           onClick={() => {
             setStatus('all')
@@ -66,7 +75,6 @@ export default function CharacterList({ initialData }: { initialData: any }) {
           <span className="group-hover:text-background">Reset Filters</span>
         </Button>
       </div>
-
       {error && (
         <Alert variant="destructive" className="mb-6">
           <AlertTitle>Error!</AlertTitle>
@@ -75,7 +83,6 @@ export default function CharacterList({ initialData }: { initialData: any }) {
           </AlertDescription>
         </Alert>
       )}
-
       {isLoading && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {Array.from({ length: 8 }).map((_, i) => (
@@ -83,9 +90,8 @@ export default function CharacterList({ initialData }: { initialData: any }) {
           ))}
         </div>
       )}
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-        {data?.results.map((character: Character) => (
+        {characters.map((character: Character) => (
           <Link key={character.id} href={`/character/${character.id}`}>
             <Card className="h-full flex flex-col overflow-hidden cursor-pointer hover:shadow-lg transition-shadow bg-background">
               <CardHeader className="p-0">
