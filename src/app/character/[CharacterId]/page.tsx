@@ -15,10 +15,9 @@ async function getCharacter(id: string): Promise<Character | null> {
 export default async function CharacterDetail({
   params
 }: {
-  params: { CharacterId: string }
+  params: Promise<{ CharacterId: string }> // ✅ params'ı Promise olarak tanımla
 }) {
-  // Await the params to access the CharacterId
-  const { CharacterId } = await params
+  const { CharacterId } = await params // ✅ params'ı `await` ile çöz
 
   const character = await getCharacter(CharacterId)
 
