@@ -1,27 +1,32 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Character } from '@/types/types'
-import { notFound } from 'next/navigation'
+'use client'
 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Character } from '@/types/types' 
+import { useParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
+// API'den karakteri getir
 async function getCharacter(id: string): Promise<Character | null> {
   try {
     const res = await fetch(`https://rickandmortyapi.com/api/character/${id}`)
     if (!res.ok) return null
-    return res.json()
+    return await res.json()
   } catch {
     return null
   }
 }
 
-export default async function CharacterDetail({
-  params
-}: {
-  params: Promise<{ CharacterId: string }> // ✅ params'ı Promise olarak tanımla
-}) {
-  const { CharacterId } = await params // ✅ params'ı `await` ile çöz
+export default function CharacterDetail() {
+  const { CharacterId } = useParams()
+  const [character, setCharacter] = useState<Character | null>(null)
 
-  const character = await getCharacter(CharacterId)
+  useEffect(() => {
+    if (CharacterId) {
+      getCharacter(CharacterId as string).then(setCharacter)
+    }
+  }, [CharacterId])
 
-  if (!character) return notFound()
+  if (!character) return <p>Loading...</p>
 
   return (
     <Card className="max-w-lg mx-auto mt-8">
